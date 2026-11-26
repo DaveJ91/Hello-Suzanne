@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello Suzanne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --snow: #F7F9FA;
+      --mist: #E3E9ED;
+      --slate: #18222B;
+      --glacier: #1F5F8B;
+      --ice: #8FC1DD;
+      --alpenglow: #C2563A;
+      --ink: #18222B;
+      --muted: #4A5863;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--snow);
+      color: var(--ink);
+      font-family: "Reddit Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          180deg,
+          #0e1820 0%,
+          #152430 28%,
+          #1a3a52 58%,
+          #2a4e68 74%,
+          #8a5a4a 88%,
+          #c2563a 100%
+        );
+      color: var(--snow);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
+
+    .ridge {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: clamp(180px, 38vh, 420px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      padding: 0 8vw 28vh;
+      max-width: 56rem;
+    }
+
+    .hero h1 {
+      font-weight: 300;
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--snow);
+    }
+
+    .hero p {
+      margin-top: 1.25rem;
+      max-width: 28rem;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      font-weight: 400;
+      color: var(--mist);
+      opacity: 0.92;
+    }
+
+    main {
+      background: var(--snow);
+      padding: 5.5rem 8vw 6rem;
+    }
+
+    .measure {
+      max-width: 38rem;
+    }
+
+    .kicker {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-weight: 500;
+      font-size: clamp(1.6rem, 2.4vw, 2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+      color: var(--slate);
+    }
+
+    .lede {
+      font-size: 1.125rem;
+      color: var(--slate);
+      margin-bottom: 2.75rem;
+    }
+
+    article + article {
+      margin-top: 2.4rem;
+      padding-top: 2.4rem;
+      border-top: 1px solid var(--mist);
+    }
+
+    time {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--glacier);
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+
+    h3 {
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: -0.015em;
+      line-height: 1.35;
+      margin-bottom: 0.55rem;
+    }
+
+    p {
+      color: var(--slate);
+      font-size: 1.05rem;
+    }
+
+    p + p { margin-top: 0.85rem; }
+
+    a {
+      color: var(--glacier);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover { color: var(--slate); }
+
+    .context {
+      margin-top: 3.25rem;
+      padding-top: 2.4rem;
+      border-top: 1px solid var(--mist);
+    }
+
+    .context h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    li {
+      padding-left: 0;
+      color: var(--slate);
+      font-size: 1.05rem;
+    }
+
+    footer {
+      padding: 0 8vw 4.5rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    footer p { color: var(--muted); font-size: 0.92rem; }
+
+    @media (max-width: 640px) {
+      .hero-copy { padding: 0 1.5rem 32vh; }
+      .ridge { height: 30vh; }
+      main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      main { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+      .hero p { max-width: 22rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero canvas { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <canvas id="sky" aria-hidden="true"></canvas>
+    <svg class="ridge" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a2c38" stop-opacity="0.55"/>
+          <stop offset="55%" stop-color="#15242e" stop-opacity="0.92"/>
+          <stop offset="100%" stop-color="#0f1a22"/>
+        </linearGradient>
+        <linearGradient id="snowline" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e8eef2" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#8fc1dd" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path fill="url(#face)" d="M0 250 L120 210 L210 255 L340 140 L455 200 L560 90 L640 150 L760 60 L870 145 L980 80 L1100 170 L1200 120 L1320 200 L1440 150 L1440 420 L0 420 Z"/>
+      <path fill="url(#snowline)" d="M340 140 L400 168 L455 200 L410 155 Z"/>
+      <path fill="url(#snowline)" d="M560 90 L610 128 L640 150 L590 112 Z"/>
+      <path fill="url(#snowline)" d="M760 60 L820 108 L870 145 L810 95 Z"/>
+      <path fill="url(#snowline)" d="M980 80 L1040 126 L1100 170 L1030 118 Z"/>
+      <path fill="#0c151c" d="M0 310 L180 280 L300 320 L480 250 L620 305 L800 230 L980 300 L1160 250 L1320 310 L1440 270 L1440 420 L0 420 Z"/>
+    </svg>
+    <div class="hero-copy">
+      <h1>Hello Suzanne</h1>
+      <p>A note on Irish e-invoicing.<br>Week of 23 November 2026.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="measure">
+      <p class="kicker">26 November 2026</p>
+      <h2>What was new this week</h2>
+      <p class="lede">There was no new Revenue eBrief, Tax and Duty Manual update, or press release on e-invoicing between Monday 23 and Thursday 26 November. The timetable published in October is unchanged. Two things did happen, and they are worth knowing.</p>
+
+      <article>
+        <time datetime="2026-11-25">Wednesday 25 November</time>
+        <h3>The Finance Bill completed its Dáil stages</h3>
+        <p>Finance (No. 2) Bill 2026 finished Report Stage and Final Stage in Dáil Éireann on 25 November, and the question was carried 86 votes to 67. The Bill now goes to the Seanad. It has not yet been enacted.</p>
+        <p>This is the Bill, first published on 19 October, that contains the legislative foundation for structured domestic e-invoicing and real-time digital reporting. In the Official Report of the 25 November sitting, the resumed Report Stage debate did not separately discuss the e-invoicing clauses, and no confirmed Report Stage amendment was found that changes the published timetable or scope.</p>
+        <p>Sources: the <a href="https://www.oireachtas.ie/en/bills/bill/2026/98/">Oireachtas Bill page</a>, the <a href="https://www.oireachtas.ie/en/debates/vote/dail/34/2026-11-25/266/">25 November vote</a>, and the <a href="https://www.oireachtas.ie/en/debates/debate/dail/2026-11-25/17/">Official Report</a>.</p>
+      </article>
+
+      <article>
+        <time datetime="2026-11-24">Tuesday 24 November</time>
+        <h3>Revenue held its Dublin tax practitioner session</h3>
+        <p>Revenue ran the scheduled in-person tax practitioner information session at An Lár, 14/15 Upper O’Connell Street, Dublin, at 11.00. The event lasted an hour and a half. It is part of the communication programme Revenue announced with its 21 and 22 October VAT Modernisation update, not a new policy announcement.</p>
+        <p>Two webinars for businesses are listed for Tuesday 1 December, at 10.30 and 14.30. A further tax practitioner session is listed for Limerick on 8 December, at Sarsfield House.</p>
+        <p>Source: <a href="https://www.revenue.ie/en/news/articles/einvoicing-webinars.aspx">Revenue’s eInvoicing webinars and information sessions page</a>, first published on 12 November.</p>
+      </article>
+
+      <article>
+        <time datetime="2026-11-23">Monday 23 November</time>
+        <h3>A conference recap, not a rule change</h3>
+        <p>Chartered Accountants Ireland published a note on its Annual Tax Conference, which had taken place on Friday 20 November. The piece records remarks on preparing for e-invoicing from November 2028, and a closing session by Revenue Commissioner Ruth Kennedy on Revenue’s move toward Tax Administration 3.0. It is useful colour. It is not new guidance or legislation.</p>
+        <p>Source: <a href="https://www.charteredaccountants.ie/knowledge-centre/Tax/News/tax-and-technology---reflecting-on-this-year-s-annual-tax-conference">Tax and Technology, 23 November 2026</a>.</p>
+      </article>
+
+      <div class="context">
+        <h2>What did not change, and the last official package</h2>
+        <p>Revenue issued several eBriefs this week, including on 24, 25 and 26 November. None of them concern e-invoicing or VAT Modernisation. The latest official package remains mid-October.</p>
+        <ul>
+          <li>On 21 October, Revenue published <a href="https://www.revenue.ie/en/corporate/documents/consultations/einvoicing/implementation-einvoice-2026.pdf">VAT Modernisation: Implementation of eInvoicing in Ireland, 2026 Update</a>.</li>
+          <li>On 22 October, Revenue’s <a href="https://www.revenue.ie/en/corporate/press-office/press-releases/2026/pr-102226-vat-modernisation.aspx">VAT Modernisation press release</a> confirmed that the phased rollout announced in October 2025 is unchanged, and pointed to draft regulations and the eInvoicing Hub.</li>
+          <li>Phase One still begins on 1 November 2028, for about 2,400 VAT-registered large corporates on domestic B2B invoices and real-time reporting, with all businesses required to be able to receive eInvoices from that date. Phase Two is 1 November 2029. Phase Three, the EU ViDA cross-border mandate, is 1 July 2030. Peppol remains the default network, and Revenue still intends to become Ireland’s Peppol Authority from 1 January 2027. The provisions remain subject to the legislative process.</li>
+        </ul>
+        <p style="margin-top: 1.25rem;">No new Commission e-invoicing or ViDA legislative announcement dated this week was found. The Commission’s revised Explanatory Notes on the VAT e-commerce package, covering changes from 1 January 2027, are dated 24 July 2026, with an addendum dated 6 October 2026. See the <a href="https://vat-one-stop-shop.ec.europa.eu/guides_en">Commission’s OSS guides page</a>.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Prepared on 26 November 2026, Europe/Dublin. Only items with a verified date are included.</p>
+  </footer>
+
+  <script>
+    (function () {
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      var canvas = document.getElementById("sky");
+      if (!canvas) return;
+      var ctx = canvas.getContext("2d");
+      var particles = [];
+      var width = 0;
+      var height = 0;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      function resize() {
+        var rect = canvas.parentElement.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function spawn(count, scatter) {
+        for (var i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: scatter ? Math.random() * height : -8,
+            r: Math.random() * 1.6 + 0.4,
+            v: Math.random() * 0.28 + 0.08,
+            drift: (Math.random() - 0.5) * 0.25,
+            a: Math.random() * 0.35 + 0.12
+          });
+        }
+      }
+
+      function tick() {
+        ctx.clearRect(0, 0, width, height);
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.y += p.v;
+          p.x += p.drift;
+          if (p.y > height + 10 || p.x < -10 || p.x > width + 10) {
+            p.y = -8;
+            p.x = Math.random() * width;
+          }
+          ctx.beginPath();
+          ctx.fillStyle = "rgba(247, 249, 250, " + p.a + ")";
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        requestAnimationFrame(tick);
+      }
+
+      resize();
+      spawn(Math.max(48, Math.floor(width / 18)), true);
+      window.addEventListener("resize", function () {
+        resize();
+      });
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
